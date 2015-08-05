@@ -1,101 +1,93 @@
-/*
- *  Surface.java
- *  Representation of any surface
- */
-
 /**
+ * Surface.java
+ *
  * @author Pranav Lakshminarayanan
  */
 package org.artoolkit.ar.base.rendering;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-
 import javax.microedition.khronos.opengles.GL10;
-
 import android.opengl.GLES10;
+import java.io.IOException;
+import org.artoolkit.ar.base.readers.OBJReader;
 
 /**
- * Simple class to render a colored cube.
+ * Representation of any surface.
  */
 public class Surface {
+
+    // GLOBAL VARIABLES ========================================================
+    /**
+     * Number of elements. Equal to the number of faces * 3
+     */
+    private int numItems;
 
     /**
      * Vertices.
      */
     private FloatBuffer mVertexBuffer;
-    
+
     /**
      * Colors for each vertex.
      */
     private FloatBuffer mColorBuffer;
-    
+
     /**
      * Indices to construct faces.
      */
-    private ByteBuffer mIndexBuffer;
+    private FloatBuffer mIndexBuffer;
+
+    // CONSTRUCTORS ============================================================
+    /**
+     * Default constructor will throw IOException demanding file.
+     *
+     * @throws IOException
+     */
+    public Surface() throws IOException {
+        throw new IOException("Initialize Surface using a filename");
+    }
 
     /**
      * Constructor for Surface class.
+     *
      * @param filename name of file representing surface
      */
-    public Surface(String filename) {
+    public Surface(String filename) throws IOException {
+        this.setArrays(filename);
     }
-    
-    private void setArrays(float size, float x, float y, float z) {
 
-        float hs = size / 2.0f;
+    // METHODS =================================================================
+    /**
+     *
+     * @param filename
+     */
+    private void setArrays(String filename) throws IOException {
+
+        OBJReader or = new OBJReader(filename);
         
-        float[] vertices = {
-            x - hs, y - hs, z - hs, // 0
-            x + hs, y - hs, z - hs, // 1
-            x + hs, y + hs, z - hs, // 2
-            x - hs, y + hs, z - hs, // 3
-            x - hs, y - hs, z + hs, // 4
-            x + hs, y - hs, z + hs, // 5
-            x + hs, y + hs, z + hs, // 6
-            x - hs, y + hs, z + hs, // 7
-        };
-
-        float c = 1.0f;
-        float[] colors = {
-            0, 0, 0, c, // 0 black
-            c, 0, 0, c, // 1 red
-            c, c, 0, c, // 2 yellow
-            0, c, 0, c, // 3 green
-            0, 0, c, c, // 4 blue
-            c, 0, c, c, // 5 magenta
-            c, c, c, c, // 6 white
-            0, c, c, c, // 7 cyan
-        };
-
-        byte[] indices = {
-            0, 4, 5, 0, 5, 1,
-            1, 5, 6, 1, 6, 2,
-            2, 6, 7, 2, 7, 3,
-            3, 7, 4, 3, 4, 0,
-            4, 7, 6, 4, 6, 5,
-            3, 0, 1, 3, 1, 2
-        };
+        float[] vertices = or.getVertices();
+        float[] colors;
+        float[] indices = or.getIndices();
 
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildByteBuffer(indices);
+        mColorBuffer = RenderUtils.buildFloatBuffer(null);
+        mIndexBuffer = RenderUtils.buildFloatBuffer(indices);
 
     }
 
-        /**
+    /**
      * Create surface from arrays.
-     * 
+     *
      * NOTES: 
-     *  Length of each color indicator: 4
-     *  Length of each vertex:          3
-     *  Number of elements:             18
-     * 
-     * @param unused 
+     *  Length of each color indicator: 4 
+     *  Length of each vertex: 3 
+     *  Number of elements: 18
+     *
+     * @param unused unused
      */
     public void draw(GL10 unused) {
-        
+
         GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, mColorBuffer);
         GLES10.glVertexPointer(3, GLES10.GL_FLOAT, 0, mVertexBuffer);
 
@@ -103,8 +95,8 @@ public class Surface {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, 36, GLES10.GL_UNSIGNED_BYTE, mIndexBuffer);
-
+                GLES10.GL_TRIANGLES, 36, GLES10.GL_FLOAT, mIndexBuffer);
+        
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 
