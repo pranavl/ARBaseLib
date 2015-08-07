@@ -1,12 +1,13 @@
 /**
  * General representation of a shape defined by vertices and edges.
- * 
+ *
  * Consists of global variables and transformations to the shape.
  */
 package org.artoolkit.ar.base.rendering;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.lang.Math;
 
 /**
  *
@@ -19,12 +20,12 @@ public abstract class Shape {
      * Vertices array.
      */
     protected float[] vertices;
-    
+
     /**
      * Colors array.
      */
     protected float[] colors;
-    
+
     /**
      * Indices array.
      */
@@ -47,12 +48,54 @@ public abstract class Shape {
 
     // TRANSFORMATIONS =========================================================
     /**
-     * Rotation.
+     * Rotation about the X-axis.
      *
-     * @param axis axis about which to rotate
-     * @param deg degrees to rotate
+     * @param theta angle in radians to rotate
      */
-    public void rotate(String axis, float deg) {
+    public void rotateX(float theta) {
+        for (int i = 1; i < vertices.length; i += 3) {
+            float yo = vertices[i];
+            float zo = vertices[i + 1];
+            vertices[i] = yo * (float) Math.cos(theta)
+                    - zo * (float) Math.sin(theta);
+            vertices[i + 1] = yo * (float) Math.sin(theta)
+                    + zo * (float) Math.cos(theta);
+        }
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
+    }
+
+    /**
+     * Rotation about the Y-axis.
+     *
+     * @param theta angle in radians to rotate
+     */
+    public void rotateY(float theta) {
+        for (int i = 0; i < vertices.length; i += 3) {
+            float xo = vertices[i];
+            float zo = vertices[i + 2];
+            vertices[i] = zo * (float) Math.cos(theta)
+                    - xo * (float) Math.sin(theta);
+            vertices[i + 2] = zo * (float) Math.sin(theta)
+                    + xo * (float) Math.cos(theta);
+        }
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
+    }
+
+    /**
+     * Rotation about the Z-axis.
+     *
+     * @param theta angle in radians to rotate
+     */
+    public void rotateZ(double theta) {
+        for (int i = 0; i < vertices.length; i += 3) {
+            float xo = vertices[i];
+            float yo = vertices[i + 1];
+            vertices[i] = xo * (float) Math.cos(theta)
+                    - yo * (float) Math.sin(theta);
+            vertices[i + 1] = xo * (float) Math.sin(theta)
+                    + yo * (float) Math.cos(theta);
+        }
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
     }
 
     /**
