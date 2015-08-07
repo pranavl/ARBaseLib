@@ -1,21 +1,40 @@
 /**
- * General representation of a shape defined by vertices and edges
+ * General representation of a shape defined by vertices and edges.
+ * 
+ * Consists of global variables and transformations to the shape.
  */
 package org.artoolkit.ar.base.rendering;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 /**
  *
  * @author Pranav
  */
-public class Shape {
+public abstract class Shape {
+
+    // GLOBAL VARIABLES ========================================================
+    /**
+     * Vertices array.
+     */
+    protected float[] vertices;
     
+    /**
+     * Colors array.
+     */
+    protected float[] colors;
+    
+    /**
+     * Indices array.
+     */
+    protected byte[] indices;
+
     /**
      * Vertices.
      */
     protected FloatBuffer mVertexBuffer;
-    
+
     /**
      * Colors for each vertex.
      */
@@ -24,11 +43,12 @@ public class Shape {
     /**
      * Indices to construct faces.
      */
-    protected FloatBuffer mIndexBuffer;
-    
+    protected ByteBuffer mIndexBuffer;
+
     // TRANSFORMATIONS =========================================================
     /**
      * Rotation.
+     *
      * @param axis axis about which to rotate
      * @param deg degrees to rotate
      */
@@ -37,21 +57,21 @@ public class Shape {
 
     /**
      * Translation.
+     *
      * @param xt along x axis
      * @param yt along y axis
      * @param zt along z axis
      */
     public void translate(float xt, float yt, float zt) {
-        if (this.mVertexBuffer.hasArray()) {
-            float[] verts = this.mVertexBuffer.array();
-            if (xt > 0) translateHelper(verts, 0, xt);
-            if (yt > 0) translateHelper(verts, 1, yt);
-            if (zt > 0) translateHelper(verts, 2, zt);
-        }
+        translateHelper(vertices, 0, xt);
+        translateHelper(vertices, 1, yt);
+        translateHelper(vertices, 2, zt);
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
     }
-    
+
     /**
      * Helps translate in one direction.
+     *
      * @param v array of vectors
      * @param ind index at which to start
      * @param t how much to translate
@@ -61,5 +81,5 @@ public class Shape {
             v[ind] += t;
         }
     }
-        
+
 }
