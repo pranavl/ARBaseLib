@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * SurfaceReader.java
+ *
+ * @author Pranav Lakshminarayanan
  */
+
 package org.artoolkit.ar.base.readers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
+ * 
  * @author Pranav
  */
 public abstract class SurfaceReader {
@@ -24,6 +25,11 @@ public abstract class SurfaceReader {
      * Array of indices making up faces.
      */
     protected short[] indices;
+    
+    /**
+     * Name of the file being read.
+     */
+    protected String filename;
 
     // ACCESSORS ===============================================================
     /**
@@ -44,23 +50,37 @@ public abstract class SurfaceReader {
         return this.indices;
     }
 
+    /**
+     * Accessor method for file name.
+     * 
+     * @return this.filename
+     */
+    public String getFilename() {
+        return this.filename;
+    }
+    
     // METHODS =================================================================
     /**
      * Read file into SurfaceReader object.
      *
-     * @param filename file to read
      * @throws FileNotFoundException if file not found
      * @throws IOException if error while reading
      */
-    protected abstract void read(String filename)
+    protected abstract void read()
             throws FileNotFoundException, IOException;
 
     /**
      * Check if file type is valid.
-     *
-     * @param filename file to read
-     * @return true if valid file type, false otherwise
+     * 
+     * @param exten expected file extension
+     * @return true if extensions match, false otherwise
      */
-    protected abstract boolean checkFileType(String filename);
-
+    public boolean checkFileType(String exten) {
+        String ext = this.filename.substring(this.filename.lastIndexOf("."));
+        if (ext.toLowerCase().equals(exten)) {
+            return true;
+        }
+        return false;
+    }
+    
 }

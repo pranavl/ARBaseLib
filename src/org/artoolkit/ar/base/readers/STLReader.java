@@ -5,7 +5,6 @@
  */
 package org.artoolkit.ar.base.readers;
 
-import android.content.res.AssetManager;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,24 +21,26 @@ public class STLReader extends SurfaceReader {
     /**
      * Constructor using file location as parameter.
      *
-     * @param filename - string of file location.
+     * @param file string of file location.
      * @throws FileNotFoundException if file not found
      * @throws IOException if error while reading
      */
-    public STLReader(String filename)
+    public STLReader(String file)
             throws FileNotFoundException, IOException {
-        if (this.checkFileType(filename)) {
-            this.read(filename);
+        this.filename = file;
+        if (this.checkFileType(".stl")) {
+            this.read();
         } else {
             throw new IOException("Incorrect file type");
         }
     }
 
     // METHODS =================================================================
-    protected void read(String filename)
+    @Override
+    protected void read()
             throws FileNotFoundException, IOException {
 
-        BufferedReader r = new BufferedReader(new FileReader(filename));
+        BufferedReader r = new BufferedReader(new FileReader(this.filename));
 
         ArrayList<Float> vList = new ArrayList<Float>();
 
@@ -59,18 +60,9 @@ public class STLReader extends SurfaceReader {
 
         this.indices = new short[this.vertices.length];
         for (int j = 0; j < this.indices.length; j++) {
-            indices[j] = (short)j;
+            this.indices[j] = (short)j;
         }
         
-    }
-
-    @Override
-    protected boolean checkFileType(String filename) {
-        String ext = filename.substring(filename.lastIndexOf("."));
-        if (ext.toLowerCase().equals(".stl")) {
-            return true;
-        }
-        return false;
     }
 
     /**
