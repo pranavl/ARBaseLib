@@ -16,29 +16,9 @@ import java.util.ArrayList;
  *
  * @author Pranav
  */
-public class STLReader {
-
-    // GLOBAL VARIABLES ========================================================
-    /**
-     * Array of vertices.
-     */
-    private float[] vertices;
-
-    /**
-     * Array of indices making up faces.
-     */
-    private float[] indices;
+public class STLReader extends SurfaceReader {
 
     // CONSTRUCTORS ============================================================
-    /**
-     * Default constructor will throw IOException demanding filename.
-     *
-     * @throws IOException if filename not specified
-     */
-    public STLReader() throws IOException {
-        throw new IOException("Initialize OBJReader with filename");
-    }
-
     /**
      * Constructor using file location as parameter.
      *
@@ -48,69 +28,54 @@ public class STLReader {
      */
     public STLReader(String filename)
             throws FileNotFoundException, IOException {
-        this.read(filename);
-    }
-
-    // ACCESSORS ===============================================================
-    /**
-     * Accessor method for vertex array.
-     *
-     * @return this.vertices
-     */
-    public float[] getVertices() {
-        return this.vertices;
-    }
-
-    /**
-     * Accessor method for index array.
-     *
-     * @return this.indices
-     */
-    public float[] getIndices() {
-        return this.indices;
+        if (this.checkFileType(filename)) {
+            this.read(filename);
+        } else {
+            throw new IOException("Incorrect file type");
+        }
     }
 
     // METHODS =================================================================
-    /**
-     * Read file and populate arrays.
-     *
-     * @param filename file name, including path
-     * @throws FileNotFoundException if file path wrong
-     * @throws IOException if error while reading
-     */
-    private void read(String filename)
+    protected void read(String filename)
             throws FileNotFoundException, IOException {
-        
+
         BufferedReader r = new BufferedReader(new FileReader(filename));
 
         ArrayList<Float> vList = new ArrayList<Float>();
-        ArrayList<Float> iList = new ArrayList<Float>();
 
         String line;
         while ((line = r.readLine()) != null) {
-            String[] ln = line.split(" ");
-            if (ln[0].toLowerCase().equals("v")) {
+            String[] ln = line.trim().split(" ");
+            if (ln[0].toLowerCase().equals("vertex")) {
                 for (int i = 1; i < ln.length; i++) {
                     vList.add(Float.parseFloat(ln[i]));
-                }
-            } else if (ln[0].toLowerCase().equals("f")) {
-                for (int i = 1; i < ln.length; i++) {
-                    iList.add(Float.parseFloat(ln[i]));
                 }
             }
         }
         r.close();
 
-        vertices = new float[vList.size()];
-        vertices = toFloatArray(vList);
+        this.vertices = new float[vList.size()];
+        this.vertices = toFloatArray(vList);
 
-        indices = new float[iList.size()];
-        indices = toFloatArray(iList);
+        this.indices = new short[this.vertices.length];
+        for (int j = 0; j < this.indices.length; j++) {
+            indices[j] = (short)j;
+        }
         
+    }
+
+    @Override
+    protected boolean checkFileType(String filename) {
+        String ext = filename.substring(filename.lastIndexOf("."));
+        if (ext.toLowerCase().equals(".stl")) {
+            return true;
+        }
+        return false;
     }
 
     /**
      * Convert list to array of generic type.
+     *
      * @param fl List of Floats
      * @return array of floats
      */

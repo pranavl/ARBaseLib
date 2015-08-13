@@ -5,9 +5,8 @@
  */
 package org.artoolkit.ar.base.rendering;
 
-import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.lang.Math;
+import java.nio.ShortBuffer;
 
 /**
  *
@@ -29,7 +28,7 @@ public abstract class Shape {
     /**
      * Indices array.
      */
-    protected byte[] indices;
+    protected short[] indices;
 
     /**
      * Vertices.
@@ -44,9 +43,21 @@ public abstract class Shape {
     /**
      * Indices to construct faces.
      */
-    protected ByteBuffer mIndexBuffer;
+    protected ShortBuffer mIndexBuffer;
 
     // TRANSFORMATIONS =========================================================
+    /**
+     * Linear scaling of shape.
+     *
+     * @param sc scaling factor
+     */
+    public void scale(float sc) {
+        for (int i = 0; i < vertices.length; i++) {
+            vertices[i] *= sc;
+        }
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
+    }
+
     /**
      * Rotation about the X-axis.
      *

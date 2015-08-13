@@ -9,33 +9,12 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES10;
 import java.io.IOException;
-import org.artoolkit.ar.base.readers.OBJReader;
+import org.artoolkit.ar.base.readers.STLReader;
 
 /**
  * Representation of any surface.
  */
-public class Surface {
-
-    // GLOBAL VARIABLES ========================================================
-    /**
-     * Number of elements. Equal to the number of faces * 3
-     */
-    private int numItems;
-
-    /**
-     * Vertices.
-     */
-    private FloatBuffer mVertexBuffer;
-
-    /**
-     * Colors for each vertex.
-     */
-    private FloatBuffer mColorBuffer;
-
-    /**
-     * Indices to construct faces.
-     */
-    private FloatBuffer mIndexBuffer;
+public class Surface extends Shape {
 
     // CONSTRUCTORS ============================================================
     /**
@@ -63,15 +42,15 @@ public class Surface {
      */
     private void setArrays(String filename) throws IOException {
 
-        OBJReader or = new OBJReader(filename);
+        STLReader or = new STLReader(filename);
         
         float[] vertices = or.getVertices();
         float[] colors;
-        float[] indices = or.getIndices();
+        short[] indices = or.getIndices();
 
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(null);
-        mIndexBuffer = RenderUtils.buildFloatBuffer(indices);
+        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
 
     }
 
@@ -94,7 +73,8 @@ public class Surface {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, 36, GLES10.GL_FLOAT, mIndexBuffer);
+                GLES10.GL_TRIANGLES, 36, 
+                GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
         
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);

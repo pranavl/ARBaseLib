@@ -81,7 +81,7 @@ public class Cube extends Shape {
         };
         this.colors = col;
 
-        byte[] ind = {
+        short[] ind = {
             0, 4, 5, 0, 5, 1,
             1, 5, 6, 1, 6, 2,
             2, 6, 7, 2, 7, 3,
@@ -93,7 +93,7 @@ public class Cube extends Shape {
 
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildByteBuffer(indices);
+        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
 
     }
 
@@ -114,7 +114,8 @@ public class Cube extends Shape {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, 36, GLES10.GL_UNSIGNED_BYTE, mIndexBuffer);
+                GLES10.GL_TRIANGLES, 36,
+                GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);

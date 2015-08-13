@@ -89,8 +89,8 @@ public class Pyramid extends Shape {
             0, 0, c, c // 4 blue
         };
         this.colors = col;
-        
-        byte[] ind = {
+
+        short[] ind = {
             0, 1, 2, 0, 2, 3,
             0, 4, 1, 1, 4, 2,
             2, 4, 3, 3, 4, 0
@@ -99,7 +99,7 @@ public class Pyramid extends Shape {
 
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildByteBuffer(indices);
+        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
 
     }
 
@@ -138,7 +138,7 @@ public class Pyramid extends Shape {
         };
         this.colors = col;
 
-        byte[] ind = {
+        short[] ind = {
             0, 1, 2, 0, 2, 3,
             0, 4, 1, 1, 4, 2,
             2, 4, 3, 3, 4, 0
@@ -147,7 +147,7 @@ public class Pyramid extends Shape {
 
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildByteBuffer(indices);
+        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
 
     }
 
@@ -168,7 +168,8 @@ public class Pyramid extends Shape {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, 18, GLES10.GL_UNSIGNED_BYTE, mIndexBuffer);
+                GLES10.GL_TRIANGLES, 18,
+                GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
