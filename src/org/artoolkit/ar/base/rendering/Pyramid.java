@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES10;
 
 /**
- * Simple class to render a colored cube.
+ * Simple class to render a colored pyramid.
  */
 public class Pyramid extends Shape {
 
@@ -103,9 +103,9 @@ public class Pyramid extends Shape {
         };
         this.indices = ind;
 
-        mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(this.vertices);
+        this.mColorBuffer = RenderUtils.buildFloatBuffer(this.colors);
+        this.mIndexBuffer = RenderUtils.buildShortBuffer(this.indices);
 
     }
 

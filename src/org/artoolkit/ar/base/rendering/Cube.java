@@ -93,9 +93,9 @@ public class Cube extends Shape {
         };
         this.indices = ind;
 
-        mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
+        this.mVertexBuffer = RenderUtils.buildFloatBuffer(this.vertices);
+        this.mColorBuffer = RenderUtils.buildFloatBuffer(this.colors);
+        this.mIndexBuffer = RenderUtils.buildShortBuffer(this.indices);
 
     }
 

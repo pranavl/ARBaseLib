@@ -2,6 +2,8 @@
  * General representation of a shape defined by vertices and edges.
  *
  * Consists of global variables and transformations to the shape.
+ * 
+ * @author Pranav Lakshminarayanan
  */
 package org.artoolkit.ar.base.rendering;
 
@@ -9,8 +11,8 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 /**
- *
- * @author Pranav
+ * Abstract representation of a Shape, 
+ * made up of vertices and indices defining faces.
  */
 public abstract class Shape {
 

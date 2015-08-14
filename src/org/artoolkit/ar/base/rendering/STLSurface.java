@@ -5,14 +5,13 @@
  */
 package org.artoolkit.ar.base.rendering;
 
-import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES10;
 import java.io.IOException;
 import org.artoolkit.ar.base.readers.STLReader;
 
 /**
- * Representation of any surface.
+ * Representation of a surface read from a .STL file
  */
 public class STLSurface extends Shape {
 
@@ -49,22 +48,22 @@ public class STLSurface extends Shape {
 
         STLReader rdr = new STLReader(filename);
         
-        vertices = rdr.getVertices();
-        indices = rdr.getIndices();
+        this.vertices = rdr.getVertices();
+        this.indices = rdr.getIndices();
         this.numElements = indices.length;
 
-        colors = new float[this.indices.length * 4];
+        this.colors = new float[this.indices.length * 4];
         for (int i = 0; i < colors.length; i++) {
             if ((i + 1) % 4 != 0) {
-                colors[i] = 0;
+                this.colors[i] = 0;
             } else {
-                colors[i] = 1.0f;
+                this.colors[i] = 1.0f;
             }
         }
         
-        mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
+        mVertexBuffer = RenderUtils.buildFloatBuffer(this.vertices);
+        mColorBuffer = RenderUtils.buildFloatBuffer(this.colors);
+        mIndexBuffer = RenderUtils.buildShortBuffer(this.indices);
 
     }
 
