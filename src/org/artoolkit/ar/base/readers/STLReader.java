@@ -58,9 +58,9 @@ public class STLReader extends SurfaceReader {
         this.vertices = new float[vList.size()];
         this.vertices = toFloatArray(vList);
 
-        this.indices = new short[this.vertices.length];
+        this.indices = new short[this.vertices.length / 3];
         for (int j = 0; j < this.indices.length; j++) {
-            this.indices[j] = (short)j;
+            this.indices[j] = (short) j;
         }
         
     }
