@@ -65,6 +65,7 @@ public class STLReader extends SurfaceReader {
         
     }
 
+    // HELPER METHODS ==========================================================
     /**
      * Convert list to array of generic type.
      *

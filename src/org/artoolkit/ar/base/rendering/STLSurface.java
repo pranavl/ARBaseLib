@@ -1,5 +1,5 @@
 /**
- * Surface.java
+ * STLSurface.java
  *
  * @author Pranav Lakshminarayanan
  */
@@ -14,15 +14,20 @@ import org.artoolkit.ar.base.readers.STLReader;
 /**
  * Representation of any surface.
  */
-public class Surface extends Shape {
+public class STLSurface extends Shape {
 
+    /**
+     * Number of elements being drawn.
+     */
+    private int numElements;
+    
     // CONSTRUCTORS ============================================================
     /**
      * Default constructor will throw IOException demanding file.
      *
      * @throws IOException
      */
-    public Surface() throws IOException {
+    public STLSurface() throws IOException {
         throw new IOException("Initialize Surface using a filename");
     }
 
@@ -31,7 +36,7 @@ public class Surface extends Shape {
      *
      * @param filename name of file representing surface
      */
-    public Surface(String filename) throws IOException {
+    public STLSurface(String filename) throws IOException {
         this.setArrays(filename);
     }
 
@@ -42,14 +47,23 @@ public class Surface extends Shape {
      */
     private void setArrays(String filename) throws IOException {
 
-        STLReader or = new STLReader(filename);
+        STLReader rdr = new STLReader(filename);
         
-        float[] vertices = or.getVertices();
-        float[] colors;
-        short[] indices = or.getIndices();
+        vertices = rdr.getVertices();
+        indices = rdr.getIndices();
+        this.numElements = indices.length;
 
+        colors = new float[this.indices.length * 4];
+        for (int i = 0; i < colors.length; i++) {
+            if ((i + 1) % 4 != 0) {
+                colors[i] = 0;
+            } else {
+                colors[i] = 1.0f;
+            }
+        }
+        
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(null);
+        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
         mIndexBuffer = RenderUtils.buildShortBuffer(indices);
 
     }
@@ -57,10 +71,6 @@ public class Surface extends Shape {
     /**
      * Create surface from arrays.
      *
-     * NOTES: 
-     *  Length of each color indicator: 4 
-     *  Length of each vertex: 3 
-     *  Number of elements: 18
      *
      * @param unused unused
      */
@@ -73,7 +83,7 @@ public class Surface extends Shape {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, 36, 
+                GLES10.GL_TRIANGLES, this.numElements, 
                 GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
         
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);

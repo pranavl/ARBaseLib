@@ -1,5 +1,7 @@
 /**
- * Pyramid.java Custom class for pyramid shaped surface
+ * Pyramid.java
+ *
+ * Custom class for pyramid shaped surface
  *
  * @author Pranav Lakshminarayanan
  */
@@ -40,7 +42,7 @@ public class Pyramid extends Shape {
      * @param z z-coordinate of center of base
      */
     public Pyramid(float height, float x, float y, float z) {
-        setArrays(height, x, y, z);
+        this(height, x, y, z, height, height);
     }
 
     /**
@@ -59,50 +61,6 @@ public class Pyramid extends Shape {
     }
 
     // METHODS =================================================================
-    /**
-     * Specify vertices, colors, and faces of pyramid.
-     *
-     * @param height height of pyramid
-     * @param x x-coordinate of center of base
-     * @param y y-coordinate of center of base
-     * @param z z-coordinate of center of base
-     */
-    private void setArrays(float height, float x, float y, float z) {
-
-        float hs = height / 2.0f;
-
-        float[] ver = {
-            x - hs, y - hs, z, // 0
-            x + hs, y - hs, z, // 1
-            x + hs, y + hs, z, // 2
-            x - hs, y + hs, z, // 3
-            x, y, z + height // 4, peak
-        };
-        this.vertices = ver;
-
-        float c = 1.0f;
-        float[] col = {
-            0, 0, 0, c, // 0 black
-            c, 0, 0, c, // 1 red
-            c, c, 0, c, // 2 yellow
-            0, c, 0, c, // 3 green
-            0, 0, c, c // 4 blue
-        };
-        this.colors = col;
-
-        short[] ind = {
-            0, 1, 2, 0, 2, 3,
-            0, 4, 1, 1, 4, 2,
-            2, 4, 3, 3, 4, 0
-        };
-        this.indices = ind;
-
-        mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
-        mColorBuffer = RenderUtils.buildFloatBuffer(colors);
-        mIndexBuffer = RenderUtils.buildShortBuffer(indices);
-
-    }
-
     /**
      * Specify vertices, colors, and faces of pyramid.
      *

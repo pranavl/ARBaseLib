@@ -1,6 +1,8 @@
 /**
  * Cube.java
  *
+ * Modified version of Cube.java from original BaseLib
+ *
  * @author Pranav Lakshminarayanan
  */
 package org.artoolkit.ar.base.rendering;
