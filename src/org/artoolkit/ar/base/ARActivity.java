@@ -227,7 +227,7 @@ public abstract class ARActivity extends Activity implements CameraEventListener
             glView.onPause();
         }
 
-	    // System hardware must be released in onPause(), so it's available to
+        // System hardware must be released in onPause(), so it's available to
         // any incoming activity. Removing the CameraPreview will do this for the
         // camera. Also do it for the GLSurfaceView, since it serves no purpose
         // with the camera preview gone.
