@@ -21,13 +21,13 @@ The Android version of the ARToolKit SDK is implemented using a Java wrapper aro
 The application was built and tested on the [Epson Moverio BT-200 smart glasses](http://www.epson.com/cgi-bin/Store/jsp/Landing/moverio-bt-200-smart-glasses.do?ref=van_moverio_2014).
 
 ##Code Example
-###`org.artoolkit.ar.base.rendering`
+####`org.artoolkit.ar.base.rendering`
 This package contains the general representation of a surface that can be rendered along with some sample shapes.
 The `Shape` abstract class defines the elements needed to render a surface, namely a collection of points defined by coordinates, 
 the indices of each point that defines a face of the surface, and an array of colors corresponding to each point.
-In addition, every shape can be transformed by rotations, translation, and scaling using methods defined in the 'Shape' class.
+In addition, every shape can be transformed by rotations, translation, and scaling using methods defined in the `Shape` class.
 
-###`org.artoolkit.ar.base.readers`
+####`org.artoolkit.ar.base.readers`
 
 ##API Reference
 The original library can be found at http://artoolkit.org/ with the [original documentation](http://artoolkit.org/documentation/).
