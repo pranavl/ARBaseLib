@@ -20,17 +20,17 @@ public abstract class Shape {
     /**
      * Vertices array.
      */
-    protected float[] vertices;
+    public float[] vertices;
 
     /**
      * Colors array.
      */
-    protected float[] colors;
+    public float[] colors;
 
     /**
      * Indices array.
      */
-    protected short[] indices;
+    public short[] indices;
 
     /**
      * Vertices.

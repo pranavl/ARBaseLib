@@ -37,7 +37,7 @@ public class STLReader extends SurfaceReader {
 
     // METHODS =================================================================
     @Override
-    protected void read()
+    protected final void read()
             throws FileNotFoundException, IOException {
 
         BufferedReader r = new BufferedReader(new FileReader(this.filename));

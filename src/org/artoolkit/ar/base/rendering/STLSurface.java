@@ -76,7 +76,7 @@ public class STLSurface extends Shape {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, this.indices.length, 
+                GLES10.GL_TRIANGLES, this.indices.length * 3, 
                 GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
         
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);

@@ -25,7 +25,7 @@ The application was built and tested on the [Epson Moverio BT-200 smart glasses]
 This package contains the general representation of a surface that can be rendered along with some sample shapes.
 The `Shape` abstract class defines the elements needed to render a surface, namely a collection of points defined by coordinates, 
 the indices of each point that defines a face of the surface, and an array of colors corresponding to each point.
-In addition, every shape can be transformed by rotations, translation, and scaling using methods defined in the `Shape` class.
+In addition, every shape can be transformed by rotations around the x, y, and z axes, translation, and scaling using methods defined in the `Shape` class.
 
 ####`org.artoolkit.ar.base.readers`
 
