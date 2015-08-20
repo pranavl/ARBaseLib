@@ -8,6 +8,7 @@ package org.artoolkit.ar.base.rendering;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES10;
 import java.io.IOException;
+import java.io.InputStream;
 import org.artoolkit.ar.base.readers.STLReader;
 
 /**
@@ -15,11 +16,17 @@ import org.artoolkit.ar.base.readers.STLReader;
  */
 public class STLSurface extends Shape {
 
+    // FIELDS ==================================================================
+    /**
+     * Name of the file being represented.
+     */
+    private String file;
+    
     // CONSTRUCTORS ============================================================
     /**
      * Default constructor will throw IOException demanding file.
      *
-     * @throws IOException
+     * @throws IOException .
      */
     public STLSurface() throws IOException {
         throw new IOException("Initialize Surface using a filename");
@@ -29,32 +36,56 @@ public class STLSurface extends Shape {
      * Constructor for Surface class.
      *
      * @param filename name of file representing surface
+     * @throws IOException .
      */
     public STLSurface(String filename) throws IOException {
-        this.setArrays(filename);
+        this.file = filename;
+        STLReader rdr = new STLReader(filename);
+        this.setArrays(rdr);   
+    }
+
+    /**
+     * Constructor for Surface class.
+     *
+     * @param is InputStream from file being read
+     * @throws IOException .
+     */
+    public STLSurface(InputStream is) throws IOException {
+        STLReader rdr = new STLReader(is);
+        this.setArrays(rdr);
+    }
+
+    // ACCESSORS ==============================================================
+    /**
+     * Name of the file being represented.
+     * 
+     * @return filename
+     */
+    public String getFilename() {
+        return this.file;
     }
 
     // METHODS =================================================================
     /**
-     *
-     * @param filename
+     * Configure surface from reader.
+     * 
+     * @param rdr STLReader used to read STL file
+     * @throws IOException .
      */
-    private void setArrays(String filename) throws IOException {
+    private void setArrays(STLReader rdr) throws IOException {
 
-        STLReader rdr = new STLReader(filename);
-        
         this.vertices = rdr.getVertices();
         this.indices = rdr.getIndices();
-        
+
         this.colors = new float[this.indices.length * 4];
         for (int i = 0; i < colors.length; i++) {
-            if ((i + 1) % 4 != 0) {
+            if ((i + 1) % 2 != 0) {
                 this.colors[i] = 0;
             } else {
                 this.colors[i] = 1.0f;
             }
         }
-        
+
         mVertexBuffer = RenderUtils.buildFloatBuffer(this.vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(this.colors);
         mIndexBuffer = RenderUtils.buildShortBuffer(this.indices);
@@ -76,7 +107,7 @@ public class STLSurface extends Shape {
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
         GLES10.glDrawElements(
-                GLES10.GL_TRIANGLES, this.indices.length * 3, 
+                GLES10.GL_TRIANGLES, this.indices.length,
                 GLES10.GL_UNSIGNED_SHORT, mIndexBuffer);
         
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);

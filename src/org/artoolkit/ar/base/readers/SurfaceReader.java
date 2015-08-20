@@ -8,6 +8,7 @@ package org.artoolkit.ar.base.readers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 
@@ -53,7 +54,7 @@ public abstract class SurfaceReader {
     /**
      * Accessor method for file name.
      * 
-     * @return this.filename
+     * @return name of file being read, null if not specified
      */
     public String getFilename() {
         return this.filename;
@@ -63,10 +64,21 @@ public abstract class SurfaceReader {
     /**
      * Read file into SurfaceReader object.
      *
+     * @param filename name of file being read
      * @throws FileNotFoundException if file not found
      * @throws IOException if error while reading
      */
-    protected abstract void read()
+    protected abstract void read(String filename)
+            throws FileNotFoundException, IOException;
+    
+    /**
+     * Read file into SurfaceReader object.
+     *
+     * @param is InputStream of file being read
+     * @throws FileNotFoundException if file not found
+     * @throws IOException if error while reading
+     */
+    protected abstract void read(InputStream is)
             throws FileNotFoundException, IOException;
 
     /**

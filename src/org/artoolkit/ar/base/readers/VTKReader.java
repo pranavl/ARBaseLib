@@ -7,6 +7,7 @@ package org.artoolkit.ar.base.readers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  *
@@ -38,9 +39,13 @@ public class VTKReader extends SurfaceReader {
 
     // METHODS =================================================================
     @Override
-    protected void read()
-            throws FileNotFoundException, IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected void read(String filename) throws FileNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void read(InputStream is) throws FileNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

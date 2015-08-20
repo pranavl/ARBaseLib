@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 /**
@@ -29,18 +32,31 @@ public class STLReader extends SurfaceReader {
             throws FileNotFoundException, IOException {
         this.filename = file;
         if (this.checkFileType(".stl")) {
-            this.read();
+            this.read(this.filename);
         } else {
             throw new IOException("Incorrect file type");
         }
     }
 
+    /**
+     * Constructor using file location as parameter.
+     *
+     * @param is InputStream from file
+     * @throws FileNotFoundException if file not found
+     * @throws IOException if error while reading
+     */
+    public STLReader(InputStream is)
+            throws FileNotFoundException, IOException {
+        this.read(is);
+
+    }
+
     // METHODS =================================================================
     @Override
-    protected final void read()
+    protected final void read(String filename)
             throws FileNotFoundException, IOException {
 
-        BufferedReader r = new BufferedReader(new FileReader(this.filename));
+        BufferedReader r = new BufferedReader(new FileReader(filename));
 
         ArrayList<Float> vList = new ArrayList<Float>();
 
@@ -62,6 +78,46 @@ public class STLReader extends SurfaceReader {
         for (int j = 0; j < this.indices.length; j++) {
             this.indices[j] = (short) j;
         }
+
+    }
+
+    @Override
+    protected final void read(InputStream is)
+            throws FileNotFoundException, IOException {
+
+        // Convert input stream to String
+        byte[] b = new byte[is.available()];
+        is.read(b);
+        String read = new String(b);
+
+        // Read for all 
+        ArrayList<Float> vList = new ArrayList<Float>();
+        BufferedReader rdr = new BufferedReader(new StringReader(read));
+        String line;
+        while ((line = rdr.readLine()) != null) {
+            String[] ln = line.trim().split(" ");
+            if (ln[0].toLowerCase().equals("vertex")) {
+                for (int i = 1; i < ln.length; i++) {
+                    vList.add(Float.parseFloat(ln[i]));
+                }
+            }
+        }
+
+        rdr.close();
+        this.vertices = new float[vList.size()];
+        this.vertices = toFloatArray(vList);
+
+        this.indices = new short[this.vertices.length / 3];
+//        for (int j = 0; j < this.indices.length; j++) {
+//            this.indices[j] = (short) j;
+//        }
+        short[] temp = {
+            0, 2, 1,
+            3, 5, 4,
+            6, 8, 7,
+            9, 11, 10,
+        };
+        this.indices = temp;
         
     }
 
