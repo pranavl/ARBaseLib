@@ -31,13 +31,14 @@ Certain implementations of the `Shape` class, specifically, `STLSurface` parse f
 ####`org.artoolkit.ar.base.readers`
 The `readers` package contains the classes needed to parse a file into the format used by ARToolKit. The `SurfaceReader` abstract class
 provides a generalization of a reader, with subclasses implementing these methods for specific file types. 
-`STLReader` is an implementation of this class specific to the [STL file format](https://en.wikipedia.org/wiki/STL_(file_format).
+`STLReader` is an implementation of this class specific to the [STL file format](https://en.wikipedia.org/wiki/STL_(file_format)).
 This reader can be constructed with either a `String` of the file name or an `InputStream`, but for Android applications it is recommended to use the latter.
 
 ####STL Surfaces
-STL models can be read from a `.stl` file in an Android project's `assets` folder.
+STL models can be read from a `.stl` file in an Android project's `assets` folder. 
+When initalized, `STLSurface` objects use `STLReader`'s to parse the file and create a model.
 
-How to construct an `STLSurface` in an `Activity`:
+**How to construct an `STLSurface` in an `Activity`:**
 ```java
 InputStream is = this.getAssets().open("stl_file.stl");
 STLSurface sur = new STLSurface(is);
@@ -45,6 +46,7 @@ STLSurface sur = new STLSurface(is);
 
 ##API Reference
 The original library can be found at http://artoolkit.org/ with the [original documentation](http://artoolkit.org/documentation/).
+
 All code in this library is documented in `Javadoc` format.
 
 ##Contributors
