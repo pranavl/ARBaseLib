@@ -24,15 +24,6 @@ public class STLSurface extends Shape {
     
     // CONSTRUCTORS ============================================================
     /**
-     * Default constructor will throw IOException demanding file.
-     *
-     * @throws IOException .
-     */
-    public STLSurface() throws IOException {
-        throw new IOException("Initialize Surface using a filename");
-    }
-
-    /**
      * Constructor for Surface class.
      *
      * @param filename name of file representing surface
