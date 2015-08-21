@@ -64,11 +64,11 @@ public abstract class SurfaceReader {
     /**
      * Read file into SurfaceReader object.
      *
-     * @param filename name of file being read
+     * @param file name of file being read
      * @throws FileNotFoundException if file not found
      * @throws IOException if error while reading
      */
-    protected abstract void read(String filename)
+    protected abstract void read(String file)
             throws FileNotFoundException, IOException;
     
     /**

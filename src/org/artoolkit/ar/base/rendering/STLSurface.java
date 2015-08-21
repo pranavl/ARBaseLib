@@ -68,6 +68,7 @@ public class STLSurface extends Shape {
         this.vertices = rdr.getVertices();
         this.indices = rdr.getIndices();
 
+        // Default all faces to green color
         this.colors = new float[this.indices.length * 4];
         for (int i = 0; i < colors.length; i++) {
             if ((i + 1) % 2 != 0) {

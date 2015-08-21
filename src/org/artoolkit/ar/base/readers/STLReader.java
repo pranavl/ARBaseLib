@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 
@@ -53,10 +52,10 @@ public class STLReader extends SurfaceReader {
 
     // METHODS =================================================================
     @Override
-    protected final void read(String filename)
+    protected final void read(String file)
             throws FileNotFoundException, IOException {
 
-        BufferedReader r = new BufferedReader(new FileReader(filename));
+        BufferedReader r = new BufferedReader(new FileReader(file));
 
         ArrayList<Float> vList = new ArrayList<Float>();
 
@@ -81,6 +80,7 @@ public class STLReader extends SurfaceReader {
 
     }
 
+    // In Android applications, use InputStream from /assets
     @Override
     protected final void read(InputStream is)
             throws FileNotFoundException, IOException {

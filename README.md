@@ -48,9 +48,9 @@ STLSurface sur = new STLSurface(is);
 ```
 
 ##API Reference
-The original library can be found at http://artoolkit.org/ with the [original documentation](http://artoolkit.org/documentation/).
+The ARToolKit library can be found at http://artoolkit.org/ with the [original documentation](http://artoolkit.org/documentation/).
 
-All code in this library is documented in `Javadoc` format.
+All code added to this library is documented in `Javadoc` format.
 
 ##Contributors
 This project was made possible with support from Dr. Peter Kazanzides and Dr. Sungmin Kim
