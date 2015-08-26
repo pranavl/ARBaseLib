@@ -13,7 +13,8 @@ By using the AR device in conjunction with other sensors for optical tracking an
 the system can operate even when markers on the patient frame are occluded from the view of a tracker. 
 
 ##Installation and Testing
-This project uses the [modified version of the ARBaseLib package](https://github.com/pranavl/ARwinss) of ARToolKit.
+This project is a modified version of the [ARBaseLib package](https://github.com/artoolkit/artoolkit5/tree/master/EclipseProjects/ARBaseLib) 
+of ARToolKit.
 After compiling the ARBaseLib package, this project can be used as an Android Library for use in other applications.
 
 The Android version of the ARToolKit SDK is implemented using a Java wrapper around native C++ code, compiled using the Java Native Interface (JNI).
@@ -21,7 +22,11 @@ The Android version of the ARToolKit SDK is implemented using a Java wrapper aro
 The application was built and tested on the [Epson Moverio BT-200 smart glasses](http://www.epson.com/cgi-bin/Store/jsp/Landing/moverio-bt-200-smart-glasses.do?ref=van_moverio_2014).
 
 ##Code Example
+The following packages were added to the ARBaseLib project to extend the functionality of this library.
+
 ####`org.artoolkit.ar.base.rendering`
+The `ARRenderer` and `RenderUtils` classes were found in the original source. All other classes are new.
+
 The `rendering` package contains the general representation of a surface that can be rendered along with some sample shapes.
 The `Shape` abstract class defines the elements needed to render a surface, namely a collection of points defined by coordinates, 
 the indices of each point that defines a face of the surface, and an array of colors corresponding to each point.
