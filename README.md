@@ -57,6 +57,8 @@ The ARToolKit library can be found at http://artoolkit.org/ with the [original d
 
 All code added to this library is documented in `Javadoc` format.
 
+`.pdf` and `.png` versions of all available markers can be found in `ARBaseLib/doc/patterns`.
+
 ##Contributors
 This project was made possible with support from Dr. Peter Kazanzides and Dr. Sungmin Kim
 of the Laboratory of Computational Sensing and Robotics at Johns Hopkins University.
